@@ -18,8 +18,8 @@ done
 
 mkdir -p ${basedir}/times
 
-category="extra-small-lia"
+category="LIA-nonlin"
 
-docker run -it --name ${category} blishko/cav23 bash scripts/run_extra_small_lia.sh -t ${timelimit}
+docker run -it --name ${category} blishko/cav23 bash scripts/run_lia-nonlin.sh -t ${timelimit}
 docker cp ${category}:/home/times/${category}/. ${basedir}/times/${category}
 docker rm -f ${category}
