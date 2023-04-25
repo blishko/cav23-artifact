@@ -5,7 +5,20 @@ if [[ $# == 0 ]]; then
     exit 1;
 fi
 
-for file in $1/*.smt2.out; do
+result_dir=$1
+
+timelimit=300
+
+while getopts "t:" o; do
+    case "${o}" in
+        t)
+            timelimit=${OPTARG}
+            ;;
+    esac
+done
+
+
+for file in ${result_dir}/*.smt2.out; do
 	#echo $file
 	if (grep '^sat' $file > /dev/null); then
 		result=sat
@@ -18,7 +31,7 @@ for file in $1/*.smt2.out; do
 	num=$(echo $filename | sed 's,\(.*\)\.smt2\.out,\1,g');
 	tm=$(sed -n 's/.* wall: \(.*\) CPU: .*/\1/p' $file)
 	if [ -z "$tm" ]; then
-		tm=300.00
+		tm=${timelimit}.00
 	fi
 	echo "$num,$result,$tm"
 done

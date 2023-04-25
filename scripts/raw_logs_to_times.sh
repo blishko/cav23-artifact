@@ -6,6 +6,17 @@ times_dir="${ARTIFACT_ROOT}/times"
 
 category=$1
 
+timelimit=300
+
+while getopts "t:" o; do
+    case "${o}" in
+        t)
+            timelimit=${OPTARG}
+            ;;
+    esac
+done
+
+
 top_dir=${log_dir}/${category}
 
 if [ ! -d ${top_dir} ]; then
@@ -17,5 +28,5 @@ mkdir -p ${times_dir}/${category}
 for tool_dir in ${top_dir}/*; do
     tool_name=`basename ${tool_dir}`
     echo "Processing tool ${tool_name}"
-    bash ${extract_script} ${tool_dir} >  ${times_dir}/${category}/${tool_name}.csv 
+    bash ${extract_script} ${tool_dir} -t ${timelimit} >  ${times_dir}/${category}/${tool_name}.csv 
 done
