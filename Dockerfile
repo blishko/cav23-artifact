@@ -39,6 +39,7 @@ ENV ELDARICA_ROOT="${ARTIFACT_ROOT}/eldarica"
 # more environment setup
 ENV OUTPUT_ROOT="${ARTIFACT_ROOT}/raw_logs"
 ENV SCRIPTS_ROOT="${ARTIFACT_ROOT}/scripts"
+ENV BENCHMARKS_ROOT="${ARTIFACT_ROOT}/benchmarks"
 
 RUN mkdir raw_logs && mkdir times
 
