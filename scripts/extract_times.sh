@@ -6,6 +6,7 @@ if [[ $# == 0 ]]; then
 fi
 
 result_dir=$1
+shift
 
 timelimit=300
 
@@ -17,6 +18,7 @@ while getopts "t:" o; do
     esac
 done
 
+#echo "Timelimit set to ${timelimit}"
 
 for file in ${result_dir}/*.smt2.out; do
 	#echo $file

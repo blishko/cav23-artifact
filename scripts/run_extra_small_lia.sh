@@ -10,6 +10,7 @@ while getopts "t:" o; do
     esac
 done
 
+#echo "Timelimit set to ${timelimit}"
 
 script_dir=${SCRIPTS_ROOT}
 benchmark_dir=${BENCHMARKS_ROOT}/extra-small-lia

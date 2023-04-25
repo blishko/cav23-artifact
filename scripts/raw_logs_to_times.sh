@@ -5,6 +5,7 @@ log_dir="${ARTIFACT_ROOT}/raw_logs"
 times_dir="${ARTIFACT_ROOT}/times"
 
 category=$1
+shift
 
 timelimit=300
 
@@ -16,6 +17,7 @@ while getopts "t:" o; do
     esac
 done
 
+#echo "Timelimit set to ${timelimit}"
 
 top_dir=${log_dir}/${category}
 
