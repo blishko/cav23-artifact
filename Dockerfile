@@ -44,6 +44,6 @@ ENV BENCHMARKS_ROOT="${ARTIFACT_ROOT}/benchmarks"
 RUN mkdir raw_logs && mkdir times
 
 # Copy scripts and benchmarks
-COPY scripts scripts
 COPY benchmarks benchmarks    
+COPY scripts scripts
 
