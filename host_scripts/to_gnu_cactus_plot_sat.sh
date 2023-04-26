@@ -31,13 +31,13 @@ filenames=`ls -1q ${TMP}/*.csv | tr '\n' ' '`
 #count=`ls -1q ${TMP}/*.csv | wc -l`
 
 cat <<EOF >${TMP}/plot.gp
-set terminal epslatex size 8.5cm,6cm color colortext
-set output 'lra_cactus_sat.tex'
-set lmargin at screen 0.1
-set xlabel '\scriptsize \# solved problems'
-set format x '\tiny %g'
-set ylabel '\scriptsize runtime (s)' offset 5,0
-set format y '\tiny %g'
+set terminal postscript eps color colortext
+set output 'lra_cactus_sat.ps'
+#set lmargin at screen 0.1
+set xlabel '# solved problems'
+#set format x '\tiny %g'
+set ylabel 'runtime (s)'
+#set format y '\tiny %g'
 set logscale y
 set pointsize 1.1
 set key samplen 1 # sets the size of the legend sample
@@ -47,7 +47,7 @@ set yrange [0.01:300]
 filenames = "${filenames}"
 labels = "${labels[*]}"
 array pointtype[8] = [1, 2, 3, 4, 6, 8, 10, 12] # avoid the filled symbols
-plot for [n=1:words(filenames)] word(filenames, n) using 0:1 with linespoints pt pointtype[n] title sprintf("%s %s",'\tiny', word(labels,n))
+plot for [n=1:words(filenames)] word(filenames, n) using 0:1 with linespoints pt pointtype[n] title sprintf("%s",word(labels,n))
 EOF
 
 # patch legend names
