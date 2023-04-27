@@ -21,5 +21,5 @@ mkdir -p ${basedir}/times
 category="extra-small-lia"
 
 docker run -it --name ${category} blishko/cav23 bash scripts/run_extra_small_lia.sh -t ${timelimit}
-docker cp ${category}:/home/times/${category}/. ${basedir}/times/${category}
+docker cp ${category}:/home/cav/times/${category}/. ${basedir}/times/${category}
 docker rm -f ${category}

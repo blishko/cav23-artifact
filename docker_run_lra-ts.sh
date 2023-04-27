@@ -21,5 +21,5 @@ mkdir -p ${basedir}/times
 category="LRA-TS"
 
 docker run -it --name ${category} blishko/cav23 bash scripts/run_lra-ts.sh -t ${timelimit}
-docker cp ${category}:/home/times/${category}/. ${basedir}/times/${category}
+docker cp ${category}:/home/cav/times/${category}/. ${basedir}/times/${category}
 docker rm -f ${category}
