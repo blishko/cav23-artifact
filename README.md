@@ -2,15 +2,27 @@
 
 This README and the related artifact are designed for allowing independent reproduction of the results reported in the tool paper `The Golem Horn Solver` accepted to the `CAV 2023` conference.
 
+This paper describes `Golem`, our solver for constrained Horn clauses (CHC).
+The solver is written in C++17 and available at [GitHub](https://github.com/usi-verification-and-security/golem).
+It is a command-line solver that takes as input SMT-LIB2 scripts that conform to the format as defined by [CHC-COMP](https://chc-comp.github.io/format).
+`Golem` attempts to decide satisfiability of the given Horn system, and outputs the answer: `sat` or `unsat`. It can also answer with `unknown` if the chosen engine is unable to reason about the input system.
+Available options can be listed using `--help` option.
+
+## Note for artifact evaluation
+We provide helper scripts to facilitate re-running the experiments; however, the experiments may take a large amount of time (in order of days), so we recommend to start running them as soon as possible.
+Unfortunately, fine-grained control over the experiments was not added due to time constraints.
+
 ## Set up
 The artifact is distributed as a combination of a `docker` image (where the experiments run) and scripts intended to run in the host machine (for presentation of the computed results).
+To repeat the experiments and obtain the results, only `docker` is required.
+However, to present the summary tables and plots, we prepared separate scripts that are expected to be run on the host system. These assume Unix-based or MacOS system with working `bash`, `gnuplot` and `python3`.
 
 It is possible to simply pull the provided image from Docker Hub:
 ```
 $ docker image pull blishko/cav23:latest
 ```
 
-Alternatively, the image can be build locally from this repository:
+Alternatively, the image can be build locally from the root directory of this repository:
 ```
 $ docker build -f Dockerfile . -t blishko/cav23
 ```
