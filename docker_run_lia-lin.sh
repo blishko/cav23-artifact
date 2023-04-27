@@ -16,10 +16,11 @@ while getopts "t:" o; do
     esac
 done
 
-mkdir -p ${basedir}/times
-
 category="LIA-lin"
 
 docker run -it --name ${category} blishko/cav23 bash scripts/run_lia-lin.sh -t ${timelimit}
+
+mkdir -p ${basedir}/times
 docker cp ${category}:/home/cav/times/${category}/. ${basedir}/times/${category}
+
 docker rm -f ${category}
