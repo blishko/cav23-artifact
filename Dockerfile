@@ -51,5 +51,5 @@ RUN mkdir raw_logs && mkdir times
 
 # Copy scripts and benchmarks
 COPY --chown=cav:cav benchmarks benchmarks
-COPY --chown=cav:cav scripts scripts
+COPY --chown=cav:cav docker_scripts scripts
 
