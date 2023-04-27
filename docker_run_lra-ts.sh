@@ -3,10 +3,6 @@
 script=$(readlink -f "$0")
 
 basedir=$(dirname "${script}")
-#cd "$basedir"
-
-
-timelimit=300
 
 while getopts "t:" o; do
     case "${o}" in
@@ -15,6 +11,12 @@ while getopts "t:" o; do
             ;;
     esac
 done
+
+if [ -z "$timelimit" ]; then
+        echo 'Missing time limit, specify with -t'
+        exit 1
+fi
+
 
 category="LRA-TS"
 
