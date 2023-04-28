@@ -93,3 +93,89 @@ We prepared the scripts in the way we originally ran the experiments, i.e., the 
 If multiple cores/processors are available, it is at least possible to run different benchmark categories in parallel. Each `docker_run_*` script fires a new container, so they do not affect each other and can be run in parallel.
 
 While `Z3` and `Golem` run in a single thread, `Eldarica` in default mode uses more than one thread. We did not restrict this in our experiments and we collect wall time, not CPU time.
+
+# Reproducing the Experiments of the Paper
+
+We assume the `docker` image has been successfully obtained (pulled or built locally) according to the instructions above and that we are in the root directory of this artifact.
+
+## Smoke tests
+To test that everything is set up correctly, run the smoke-test script:
+
+```
+$ bash docker_run_smoke_test.sh
+```
+
+These starts the docker container and executes each solver on a single satisfiable and a single unsatisfiable benchmark. It should finish in a couple of seconds.
+The expected output is
+
+```
+Running Z3 on trivial SAT benchmark
+sat
+Running Z3 on trivial UNSAT benchmark
+unsat
+Running Eldarica on trivial SAT benchmark
+sat
+Running Eldarica on trivial UNSAT benchmark
+unsat
+Running Golem on trivial SAT benchmark
+sat
+Running Golem on trivial UNSAT benchmark
+unsat
+```
+
+## CHC-COMP categories
+For each of the benchmark collections reported on in the paper, there is a corresponding `docker_run_` script that launches the experiments for that particular benchmark collections. 
+Each script takes a mandatory argument `-t <N>` which specifies the timeout of `N` seconds for each task.
+In all our experiments we used a timeout of 300 seconds, i.e., `-t 300`.
+
+The full commands are the following, assuming we are in the root directory of this repository. However, see the runtime estimates below before executing.
+```
+$ bash docker_run_extra_small_lia.sh -t 300
+```
+
+```
+$ bash docker_run_lia-nonlin.sh -t 300
+```
+
+```
+$ bash docker_run_lia-lin.sh -t 300
+```
+
+```
+$ bash docker_run_lra-ts.sh -t 300
+```
+
+
+### Runtime estimates
+With the full timeout of 300 seconds, these are our approximate estimates on the runtime for each benchmark set:
+* `extra-small-lia`: ~16 hours
+* `LIA-nonlin`: ~30 hours
+* `LIA-Lin`: ~75 hours (more than 3 days)
+* `LRA-TS`: ~5 days
+
+Given the large runtimes, we recommend to run the experiments in the background, ideally on some remote machine that can run uninterrupted for a couple of days.
+
+Before running the experiments with large runtime, we recommend to try a small timeout, obtain some results and test the scripts for summarizing and presenting the results, as described below.
+For example, running `LRA-TS` with a timeout of 10 seconds should finish in around half a day and should already give a good approximations of the final results.
+For a quick test we recommend to run `extra-small-lia` or `LIA-nonlin` with a timeout of 3 seconds. This should finish in 10 minutes, or under one hour, respectively.
+
+### Presenting results
+
+# Golem outside of this artifact
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
