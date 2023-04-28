@@ -53,6 +53,7 @@ This repository contains the following:
 * `install_packages.sh`: A script that installs the necessary dependencies in the `docker` image.
 * `host_scripts`: Collections of scripts that are used to present the results obtained from the experiments; these are intended to run on the host.
 * `docker_run_*`: A set of scripts for executing the experiments; these are executed on the host machine. They start a new docker container, run the corresponding experiment and copy the obtained results back to the host.
+* `original_logs`: Results collected from our original experiments. Note that these use *space* as the delimiter while the scripts in this artifact use *comma* as the delimiter. Also note that these are the original logs obtained by using `Golem 0.3.1` (and older version of `Z3` for `extra-small-lia`), as mentioned above.
 
 ## Docker image structure
 Beside the benchmarks and helper scripts copied from this repository, the docker image also contains all the tools used in the experiments. We used the binaries released in the corresponding GitHub repositories and these are already prepared in the docker image.
