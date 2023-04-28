@@ -12,6 +12,11 @@ Available options can be listed using `--help` option.
 We provide helper scripts to facilitate re-running the experiments; however, the experiments may take a large amount of time (in order of days), so we recommend to start running them as soon as possible.
 Unfortunately, fine-grained control over the experiments was not added due to time constraints.
 
+Compared to the experimentation describes in the original submission, we noticed the following problem during the preparation of the artifact.
+First, there was a bug in the branch of the tool dealing with the extension of the split-TPA module to the chain of transition systems. This bug only affects the `Golem` on the `extra-small-lia` subcategory (Table 2). For this artifact, we thus use version `0.3.2` instead of `0.3.1`. The change between this releases only fixes this bug and all other experiments are unaffected. In the fixed version, `split-tpa` solved `22` benchmarks, instead of the originally reported `44` benchmarks.
+Additionally, the results reported for `Z3-Spacer` on the `extra-small-lia` category were obtained from older version of Z3 than used in the other experiments. `z3-4.11.2` solved `18` benchmarks instead of `16` originally reported.
+These only affect the `extra-small-lia` subcategory (Table 2) and not the other results. We fill fix the presentation in the final version of the paper.
+
 ## Set up
 The artifact is distributed as a combination of a `docker` image (where the experiments run) and scripts intended to run in the host machine (for presentation of the computed results).
 To repeat the experiments and obtain the results, only `docker` is required.
@@ -145,6 +150,8 @@ $ bash docker_run_lia-lin.sh -t 300
 $ bash docker_run_lra-ts.sh -t 300
 ```
 
+These commands launch a `docker` container where the experiments run and copies the files with results out back to the host. The results are returned as `.csv` file, one for each solver/configuration. The files are copied to the `times/<category>` directory in this repository's root directory.
+The containers are deleted at the end of the scripts.
 
 ### Runtime estimates
 With the full timeout of 300 seconds, these are our approximate estimates on the runtime for each benchmark set:
@@ -161,9 +168,52 @@ For a quick test we recommend to run `extra-small-lia` or `LIA-nonlin` with a ti
 
 ### Presenting results
 
+When the experiments finish, go to the `host_scripts` directory and run scripts for the desired category.
+
+#### LRA-TS
+Run the script `present_results.sh` giving it the path to the directory with the results and the same time limit used for the experiments. For example, if you used the time limit of 300 seconds and you are in the `host_scripts` directory, the command would look like this
+
+```
+$ bash lra-ts/present_results.sh ../times/LRA-TS -t 300
+```
+
+This recomputes the results of *virtual best (VB)* first and then prints the number of solved benchmark (SAT and UNSAT) for each of Golem's engines to the standard output. This corresponds to Table 1 of the paper.
+
+Additionally, it also plots the data in the form of cactus plot and stores the figure as a postscript file (.ps) in the directory where the command has been executed. This corresponds to the plot in Figure 2 of the paper.
+
+*Note:* On Ubuntu, the `Document Viewer` is able to display `.ps` file directly. In general, for exmaple, on MacOS, `pstopdf` could be used to convert the `.ps` file to `.pdf`.
+
+#### LIA-Lin and extra-small-lia
+
+Similarly as in the previous section, execute the following commands (in the `host_scripts` directory)
+```
+$ bash extra-small-lia/to_summary.sh ../times/extra-small-lia
+```
+
+```
+$ bash lia-lin/to_summary.sh ../times/LIA-lin
+```
+
+These compute the number of solved benchmarks for each tool and print the results to the standard output. These results correspond to Table 2 and Table 3 of the paper.
+
+#### LIA-Nonlin
+The results of Table 4 of the paper are obtained by running the following command (after experiments for LIA-Nonlin  has finished running):
+```
+$ bash lia-nonlin/to_summary_table.sh ../times/LIA-nonlin
+```
+This prints the summary of the results to the standard output.
+To create the scatter plots, run
+```
+$ bash lia-nonlin/to_scatterplots.sh ../times/LIA-nonlin
+```
+This creates `scatter1.ps` and `scatter2.ps` that correspond to the plots of Figure 3.
+
 # Golem outside of this artifact
+Beside this artifact, `Golem` is also available on [GitHub](https://github.com/usi-verification-and-security/golem).
+The GitHub repository contains README with additional information about the tool, including basic description of how to compile it from source. It additionally contains regular binary [releases](https://github.com/usi-verification-and-security/golem/releases).
 
-
+Additionally, `Golem` participated in CHC-COMP 2021, 2022 and 2023.
+Reports on competitions are publicly available, see the reports of [2021](https://arxiv.org/abs/2109.04635) and [2022](https://arxiv.org/abs/2211.12231) (report for 2023 has not been released yet).
 
 
 
