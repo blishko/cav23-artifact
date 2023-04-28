@@ -15,25 +15,39 @@ Unfortunately, fine-grained control over the experiments was not added due to ti
 ## Set up
 The artifact is distributed as a combination of a `docker` image (where the experiments run) and scripts intended to run in the host machine (for presentation of the computed results).
 To repeat the experiments and obtain the results, only `docker` is required.
+We assume familiarity with [Docker terminology](https://docs.docker.com/get-started/).
 However, to present the summary tables and plots, we prepared separate scripts that are expected to be run on the host system. These assume Unix-based or MacOS system with working `bash`, `gnuplot` and `python3`.
+
+**WARNING:** Docker is known to have issues with the new Apple M1 and M2 chips; we expect the artifact will not work on such machines. We have tested the artifact on MacOS with Intel chip and Ubuntu with AMD chips where we did not encounter issues.
 
 It is possible to simply pull the provided image from Docker Hub:
 ```
 $ docker image pull blishko/cav23:latest
 ```
 
-Alternatively, the image can be build locally from the root directory of this repository:
+Alternatively, the image can be built locally from the root directory of this repository:
 ```
 $ docker build -f Dockerfile . -t blishko/cav23
 ```
 
 ## Machine specification
-We tested the docker image on the same hardware where we ran the original experiments.
-This is quite a powerful machine with AMD EPYC 7452 32-core processor and 8x32 GiB of memory.
+The original experiments were run on a powerful machine with AMD EPYC 7452 32-core processor and 8x32 GiB of memory. 
 
-# Docker image structure
-The docker image contains all the tools used in the experiments, the benchmarks sets and helper scripts for running the tools and collecting the results.
-The root directory of the docker image is `/home` and is the working directory when the container is running.
+**NOTE:** We observed small slowdown in the solver's performance when running in the Docker container on the same machine. Moreover, the results will also differ based on the power of your machine. However, all solvers should be affected similarly, thus the overall trends reported in the paper should be replicated.
+
+# Artifact structure
+This repository contains the following:
+
+* `Dockerfile` for building the `docker` image.
+* `docker_scripts`: A set of scripts that are copied to the `docker` image and used to run the experiments in the `docker` container.
+* `benchmarks`: Collections of benchmarks that are also copied to the `docker` image.
+* `install_packages.sh`: A script that installs the necessary dependencies in the `docker` image.
+* `host_scripts`: Collections of scripts that are used to present the results obtained from the experiments; these are intended to run on the host.
+* `docker_run_*`: A set of scripts for executing the experiments; these are executed on the host machine. They start a new docker container, run the corresponding experiment and copy the obtained results back to the host.
+
+## Docker image structure
+Beside the benchmarks and helper scripts copied from this repository, the docker image also contains all the tools used in the experiments. We used the binaries released in the corresponding GitHub repositories and these are already prepared in the docker image.
+The working directory of the docker image is `/home/cav`.
 It contains the following subdirectories:
 
 * `benchmarks`: collections of benchmarks used in the experiments
@@ -59,12 +73,12 @@ In the experiments we used 4 benchmark sets. They are available as GitHub reposi
 
 * [`LIA-Nonlin`](https://github.com/chc-comp/chc-comp22-benchmarks/tree/main/LIA) benchmarks from LIA-Nonlin track of CHC-COMP'22
 
-* [`extra-small-lia`](https://github.com/chc-comp/extra-small-lia) one specific category of all LIA-Lin benchmarks, all satisfiable (subset of this category was selected for LIA-Lin of CHC-COMP'22)
+* [`extra-small-lia`](https://github.com/chc-comp/extra-small-lia) one specific category of all LIA-Lin benchmarks, all satisfiable (a subset of this category is part of the selection for LIA-Lin of CHC-COMP'22)
 
 
-The benchmarks are available in `benchmarks` folder, each set in corresponding subfolder.
+The benchmarks are available in `benchmarks` folder, each set in the corresponding subfolder.
 
-The artifact repository additionally contains `trivial` benchmarks used for smoke tests.
+The artifact repository additionally contains `trivial` benchmarks used for the smoke test.
 
 ## Tools
 In these experiments we compare `Golem 0.3.2` against `Eldarica 2.0.8` and `Spacer` engine in `Z3 4.11.2`.
@@ -72,4 +86,10 @@ The artifact uses binaries officially published on GitHub.
 
 
 ## Scripts
+The intended way to reproduce the experiment runs is with the provided `docker_run_*.sh` scripts. These scripts start a new `docker` container from the `blishko/cav23` image, run the selected tools on the given category of benchmarks, collect the results in a single file per tool, copy the results back to host and finally delete the container.
 
+### Note on parallelism
+We prepared the scripts in the way we originally ran the experiments, i.e., the tools run *sequentially* on the benchmarks. This means that each experiment will take a long time (in the order of days).
+If multiple cores/processors are available, it is at least possible to run different benchmark categories in parallel. Each `docker_run_*` script fires a new container, so they do not affect each other and can be run in parallel.
+
+While `Z3` and `Golem` run in a single thread, `Eldarica` in default mode uses more than one thread. We did not restrict this in our experiments and we collect wall time, not CPU time.
