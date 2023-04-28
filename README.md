@@ -246,6 +246,7 @@ This creates `scatter1.ps` and `scatter2.ps` that correspond to the plots of Fig
 # Golem outside of this artifact
 Beside this artifact, `Golem` is also available on [GitHub](https://github.com/usi-verification-and-security/golem).
 The GitHub repository contains README with additional information about the tool, including basic description of how to compile it from source. It additionally contains regular binary [releases](https://github.com/usi-verification-and-security/golem/releases).
+After you obtain the binary, `Golem` can run on any SMT-LIB2 file defining a CHC satisfiability problem as mentioned in the introduction. Additional options are explained in the usage, obtained by running `golem --help`.
 
 Additionally, `Golem` participated in CHC-COMP 2021, 2022 and 2023.
 Reports on competitions are publicly available, see the reports of [2021](https://arxiv.org/abs/2109.04635) and [2022](https://arxiv.org/abs/2211.12231) (report for 2023 has not been released yet).
