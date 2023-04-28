@@ -1,3 +1,7 @@
+
+[![DOI](https://zenodo.org/badge/631877734.svg)](https://zenodo.org/badge/latestdoi/631877734)
+
+
 # Introduction
 
 This README and the related artifact are designed for allowing independent reproduction of the results reported in the tool paper `The Golem Horn Solver` accepted to the `CAV 2023` conference.
