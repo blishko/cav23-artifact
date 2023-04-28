@@ -87,7 +87,7 @@ In the experiments we used 4 benchmark sets. They are available as GitHub reposi
 
 The benchmarks are available in `benchmarks` folder, each set in the corresponding subfolder.
 
-The artifact repository additionally contains `trivial` benchmarks used for the smoke test.
+The artifact repository additionally contains `trivial` benchmarks used for the smoke test and a benchmark for demonstrating the witness computation.
 
 ## Tools
 In these experiments we compare `Golem 0.3.2` against `Eldarica 2.0.8` and `Spacer` engine in `Z3 4.11.2`.
@@ -131,6 +131,32 @@ sat
 Running Golem on trivial UNSAT benchmark
 unsat
 ```
+
+## Witness computation
+Example 1 in the paper gives a simple example of an unsatisfiability witness.
+The script `docker_run_witness.sh` shows that `Golem` will produce witness when ran with the option `--print-witness`.
+After running
+```
+$ bash docker_run_witness.sh
+```
+the expected output is
+```
+Running Golem with witness production!
+unsat
+0:	true
+1:	(L1 1) ->  0
+
+2:	(D 1 2) ->  0
+
+3:	(L2 2) ->  2 1
+
+4:	false ->  3
+```
+This is the message from the script itself, the answer from `Golem` and the unsatisfiability proof.
+Note that the format is slightly different than in the paper, but the reasoning steps are the same.
+Each derivation edge contains the ids of its premises on the right of "->".
+The only exception is the helper step 0, which is an axiom.
+
 
 ## CHC-COMP categories
 For each of the benchmark collections reported on in the paper, there is a corresponding `docker_run_` script that launches the experiments for that particular benchmark collections. 
