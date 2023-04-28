@@ -166,9 +166,13 @@ Before running the experiments with large runtime, we recommend to try a small t
 For example, running `LRA-TS` with a timeout of 10 seconds should finish in around half a day and should already give a good approximations of the final results.
 For a quick test we recommend to run `extra-small-lia` or `LIA-nonlin` with a timeout of 3 seconds. This should finish in 10 minutes, or under one hour, respectively.
 
+### Memory requirements
+`Golem` itself is quite modest with the memory consumption, a single task should not consume more than 2 gigabytes and is typically much lower.
+On the other hand, `Eldarica` often consumes much more memory than `Golem` and might run into more memory-outs on systems with modest memory resources. 
+
 ### Presenting results
 
-When the experiments finish, go to the `host_scripts` directory and run scripts for the desired category.
+When the experiments finish, go to the `host_scripts` directory and run scripts for the desired category. Note that the presenting script in each category requires only results from that category, it is not necessary to wait for all experimentation to finish.
 
 #### LRA-TS
 Run the script `present_results.sh` giving it the path to the directory with the results and the same time limit used for the experiments. For example, if you used the time limit of 300 seconds and you are in the `host_scripts` directory, the command would look like this
@@ -214,18 +218,5 @@ The GitHub repository contains README with additional information about the tool
 
 Additionally, `Golem` participated in CHC-COMP 2021, 2022 and 2023.
 Reports on competitions are publicly available, see the reports of [2021](https://arxiv.org/abs/2109.04635) and [2022](https://arxiv.org/abs/2211.12231) (report for 2023 has not been released yet).
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
