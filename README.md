@@ -4,7 +4,7 @@
 
 # Introduction
 
-This README and the related artifact are designed for allowing independent reproduction of the results reported in the tool paper `The Golem Horn Solver` accepted to the `CAV 2023` conference.
+This README and the related [artifact](https://github.com/blishko/cav23-artifact) are designed for allowing independent reproduction of the results reported in the tool paper `The Golem Horn Solver` accepted to the `CAV 2023` conference.
 
 This paper describes `Golem`, our solver for constrained Horn clauses (CHC).
 The solver is written in C++17 and available at [GitHub](https://github.com/usi-verification-and-security/golem).
@@ -14,22 +14,20 @@ Available options can be listed using `--help` option.
 
 ## Note for artifact evaluation
 We provide helper scripts to facilitate re-running the experiments; however, the experiments may take a large amount of time (in order of days), so we recommend to start running them as soon as possible.
-Unfortunately, fine-grained control over the experiments was not added due to time constraints.
 
-Compared to the experimentation describes in the original submission, we noticed the following problem during the preparation of the artifact.
-First, there was a bug in the branch of the tool dealing with the extension of the split-TPA module to the chain of transition systems. This bug only affects the `Golem` on the `extra-small-lia` subcategory (Table 2). For this artifact, we thus use version `0.3.2` instead of `0.3.1`. The change between this releases only fixes this bug and all other experiments are unaffected. In the fixed version, `split-tpa` solved `22` benchmarks, instead of the originally reported `44` benchmarks.
+Compared to the experimentation described in the original submission, we noticed the following problem during the preparation of the artifact.
+First, there was a bug in the part of the code dealing with the extension of the split-TPA module to the chain of transition systems. This bug only affects `split-TPA` engine of `Golem` on the `extra-small-lia` subcategory (Table 2). For this artifact, we thus use version `0.3.2` instead of `0.3.1`. The change between these releases only fixes this bug; all other experiments are unaffected. In the fixed version, `split-tpa` solved `22` benchmarks, instead of the originally reported `44` benchmarks.
 Additionally, the results reported for `Z3-Spacer` on the `extra-small-lia` category were obtained from older version of Z3 than used in the other experiments. `z3-4.11.2` solved `18` benchmarks instead of `16` originally reported.
 These only affect the `extra-small-lia` subcategory (Table 2) and not the other results. We fill fix the presentation in the final version of the paper.
 
 ## Set up
 The artifact is distributed as a combination of a `docker` image (where the experiments run) and scripts intended to run in the host machine (for presentation of the computed results).
-To repeat the experiments and obtain the results, only `docker` is required.
-We assume familiarity with [Docker terminology](https://docs.docker.com/get-started/).
+To repeat the experiments and obtain the results, only `docker` is required; we assume familiarity with [Docker terminology](https://docs.docker.com/get-started/).
 However, to present the summary tables and plots, we prepared separate scripts that are expected to be run on the host system. These assume Unix-based or MacOS system with working `bash`, `gnuplot` and `python3`.
 
-**WARNING:** Docker is known to have issues with the new Apple M1 and M2 chips; we expect the artifact will not work on such machines. We have tested the artifact on MacOS with Intel chip and Ubuntu with AMD chips where we did not encounter issues.
+**WARNING:** Docker is known to have issues with the new Apple M1 and M2 chips; the artifact will most likely not work on machines with these chips. We have tested the artifact on MacOS with Intel chip and Ubuntu with AMD chips where we did not encounter issues.
 
-It is possible to simply pull the provided image from Docker Hub:
+Assuming a running docker engine, it is possible to simply pull the provided Docker image from Docker Hub:
 ```
 $ docker image pull blishko/cav23:latest
 ```
@@ -42,7 +40,7 @@ $ docker build -f Dockerfile . -t blishko/cav23
 ## Machine specification
 The original experiments were run on a powerful machine with AMD EPYC 7452 32-core processor and 8x32 GiB of memory. 
 
-**NOTE:** We observed small slowdown in the solver's performance when running in the Docker container on the same machine. Moreover, the results will also differ based on the power of your machine. However, all solvers should be affected similarly, thus the overall trends reported in the paper should be replicated.
+**NOTE:** We observed small slowdown in the solvers' performance when running in the Docker container on the same machine. Moreover, the results will also differ based on the power of your machine. However, all solvers should be affected similarly, thus the overall trends reported in the paper should be replicated.
 
 # Artifact structure
 This repository contains the following:
@@ -53,7 +51,7 @@ This repository contains the following:
 * `install_packages.sh`: A script that installs the necessary dependencies in the `docker` image.
 * `host_scripts`: Collections of scripts that are used to present the results obtained from the experiments; these are intended to run on the host.
 * `docker_run_*`: A set of scripts for executing the experiments; these are executed on the host machine. They start a new docker container, run the corresponding experiment and copy the obtained results back to the host.
-* `original_logs`: Results collected from our original experiments. Note that these use *space* as the delimiter while the scripts in this artifact use *comma* as the delimiter. Also note that these are the original logs obtained by using `Golem 0.3.1` (and older version of `Z3` for `extra-small-lia`), as mentioned above.
+* `original_logs`: Results collected from our original experiments. Note that these use *space* as the delimiter while the scripts in this artifact use *comma* as the delimiter. Also note that these are the original logs obtained by using `Golem 0.3.1` (and older version of `Z3` for `extra-small-lia`), as mentioned in the introduction.
 
 ## Docker image structure
 Beside the benchmarks and helper scripts copied from this repository, the docker image also contains all the tools used in the experiments. We used the binaries released in the corresponding GitHub repositories and these are already prepared in the docker image.
@@ -96,7 +94,7 @@ The artifact uses binaries officially published on GitHub.
 
 
 ## Scripts
-The intended way to reproduce the experiment runs is with the provided `docker_run_*.sh` scripts. These scripts start a new `docker` container from the `blishko/cav23` image, run the selected tools on the given category of benchmarks, collect the results in a single file per tool, copy the results back to host and finally delete the container.
+The intended way to reproduce the experiment runs is with the provided `docker_run_*.sh` scripts. These scripts start a new `docker` container from the `blishko/cav23` image, run selected tools on the given category of benchmarks, collect the results in a single file per tool, copy the results back to host and finally delete the container.
 
 ### Note on parallelism
 We prepared the scripts in the way we originally ran the experiments, i.e., the tools run *sequentially* on the benchmarks. This means that each experiment will take a long time (in the order of days).
@@ -155,16 +153,30 @@ unsat
 ```
 This is the message from the script itself, the answer from `Golem` and the unsatisfiability proof.
 Note that the format is slightly different than in the paper, but the reasoning steps are the same.
-Each derivation edge contains the ids of its premises on the right of "->".
+Each derivation step contains the ids of its premises on the right of "->".
 The only exception is the helper step 0, which is an axiom.
 
 
 ## CHC-COMP categories
-For each of the benchmark collections reported on in the paper, there is a corresponding `docker_run_` script that launches the experiments for that particular benchmark collections. 
+For each of the benchmark collections reported on in the paper, there is a corresponding `docker_run_<category>.sh` script that launches the experiments for that particular benchmark collections.
 Each script takes a mandatory argument `-t <N>` which specifies the timeout of `N` seconds for each task.
 In all our experiments we used a timeout of 300 seconds, i.e., `-t 300`.
+These commands launch a `docker` container where the experiments run and copies the files with results back to the host. The results are returned as `.csv` file, one for each solver/configuration. The files are copied to the `times/<category>` directory in this repository's root directory.
+The containers are deleted at the end of the scripts.
 
-The full commands are the following, assuming we are in the root directory of this repository. However, see the runtime estimates below before executing.
+Before running the experiments with this timeout, we recommend to first try with a small timeout, obtain some results and test the scripts for summarizing and presenting the results, as described below.
+For a relatively quick test we recommend to run `extra-small-lia` and `LIA-nonlin` with a timeout of 3 seconds. This should finish in 10 minutes, and under one hour, respectively.
+To run this quick version of the experiments, run the following commands in the root directory of this repository.
+
+```
+$ bash docker_run_extra_small_lia.sh -t 3
+
+$ bash docker_run_lia-nonlin.sh -t 3
+```
+
+See below how to obtain the summary of the experiments and plots once the experiments finish.
+
+The full experiments, with timeout of 300 seconds, can be run with the following commands. However, see the runtime estimates below before executing.
 ```
 $ bash docker_run_extra_small_lia.sh -t 300
 ```
@@ -181,8 +193,7 @@ $ bash docker_run_lia-lin.sh -t 300
 $ bash docker_run_lra-ts.sh -t 300
 ```
 
-These commands launch a `docker` container where the experiments run and copies the files with results out back to the host. The results are returned as `.csv` file, one for each solver/configuration. The files are copied to the `times/<category>` directory in this repository's root directory.
-The containers are deleted at the end of the scripts.
+Recall, that each will launch a separate docker container, thus they can be executed in parallel, if more than 4 cores are available.
 
 ### Runtime estimates
 With the full timeout of 300 seconds, these are our approximate estimates on the runtime for each benchmark set:
@@ -193,9 +204,7 @@ With the full timeout of 300 seconds, these are our approximate estimates on the
 
 Given the large runtimes, we recommend to run the experiments in the background, ideally on some remote machine that can run uninterrupted for a couple of days.
 
-Before running the experiments with large runtime, we recommend to try a small timeout, obtain some results and test the scripts for summarizing and presenting the results, as described below.
-For example, running `LRA-TS` with a timeout of 10 seconds should finish in around half a day and should already give a good approximations of the final results.
-For a quick test we recommend to run `extra-small-lia` or `LIA-nonlin` with a timeout of 3 seconds. This should finish in 10 minutes, or under one hour, respectively.
+**NOTE:** If time is an issue, we suggest to run `LRA-TS` with a timeout of 10 seconds (instead of 300). It should then finish in around half a day and should already give a good approximations of the final results. Depending on the available time, other categories can be run with smaller time limit as well (e.g. 200 seconds). The solvers will inevitably solve smaller amount of benchmarks, but the overall trends should be preserved.
 
 ### Memory requirements
 `Golem` itself is quite modest with the memory consumption, a single task should not consume more than 2 gigabytes and is typically much lower.
@@ -216,7 +225,9 @@ This recomputes the results of *virtual best (VB)* first and then prints the num
 
 Additionally, it also plots the data in the form of cactus plot and stores the figure as a postscript file (.ps) in the directory where the command has been executed. This corresponds to the plot in Figure 2 of the paper.
 
-*Note:* On Ubuntu, the `Document Viewer` is able to display `.ps` file directly. In general, for exmaple, on MacOS, `pstopdf` could be used to convert the `.ps` file to `.pdf`.
+*Note:* On Ubuntu, the `Document Viewer` is able to display `.ps` file directly.
+On MacOS, [`pstopdf`](https://www.unix.com/man-page/osx/1/pstopdf/) could be used to convert the `.ps` file to `.pdf`.
+On Linux, `ps2pdf` command should be available.
 
 #### LIA-Lin and extra-small-lia
 
