@@ -15,10 +15,13 @@ Available options can be listed using `--help` option.
 ## Note for artifact evaluation
 We provide helper scripts to facilitate re-running the experiments; however, the experiments may take a large amount of time (in order of days), so we recommend to start running them as soon as possible.
 
+### Errata
 Compared to the experimentation described in the original submission, we noticed the following problem during the preparation of the artifact.
-First, there was a bug in the part of the code dealing with the extension of the split-TPA module to the chain of transition systems. This bug only affects `split-TPA` engine of `Golem` on the `extra-small-lia` subcategory (Table 2). For this artifact, we thus use version `0.3.2` instead of `0.3.1`. The change between these releases only fixes this bug; all other experiments are unaffected. In the fixed version, `split-tpa` solved `22` benchmarks, instead of the originally reported `44` benchmarks.
-Additionally, the results reported for `Z3-Spacer` on the `extra-small-lia` category were obtained from older version of Z3 than used in the other experiments. `z3-4.11.2` solved `18` benchmarks instead of `16` originally reported.
-These only affect the `extra-small-lia` subcategory (Table 2) and not the other results. We fill fix the presentation in the final version of the paper.
+First, there was a bug in the part of the code dealing with the extension of the split-TPA module to the chain of transition systems. This bug affects *only* `split-TPA` engine of `Golem` on the `extra-small-lia` subcategory (Table 2). For this artifact, we thus use version `0.3.2` instead of `0.3.1`. The change between these releases only fixes this bug; all other experiments are unaffected. In the fixed version, `split-tpa` solved `22` benchmarks, instead of the originally reported `44` benchmarks.
+Additionally, the results reported for `Z3-Spacer` on the `extra-small-lia` category were obtained from older version of Z3 than used in the other experiments. `Z3 4.11.2` solved `18` benchmarks instead of `16` originally reported.
+While `split-TPA` is now worse than `Eldarica`, it is still better than other `Golem`'s engines (and `Z3-Spacer`) on this subcategory.
+We stress that only the results for the `extra-small-lia` subcategory (Table 2) are affected, all other results are unaffected.
+We fill fix the presentation in the camera-ready version of the paper.
 
 ## Set up
 The artifact is distributed as a combination of a `docker` image (where the experiments run) and scripts intended to run in the host machine (for presentation of the computed results).
@@ -68,7 +71,7 @@ It contains the following subdirectories:
 
 * `golem`: [`Golem`](https://github.com/usi-verification-and-security/golem) (v0.3.2)
 
-* `z3-4.11.2-x64-glibc-2.31`: [`z3`](https://github.com/Z3Prover/z3) solver (v4.11.2) which contains `Spacer` as one of its engines for solving CHCs.
+* `z3-4.11.2-x64-glibc-2.31`: [`Z3`](https://github.com/Z3Prover/z3) solver (v4.11.2) which contains `Spacer` as one of its engines for solving CHCs.
 
 
 ## Benchmark sets
@@ -170,13 +173,14 @@ To run this quick version of the experiments, run the following commands in the 
 
 ```
 $ bash docker_run_extra_small_lia.sh -t 3
-
+```
+```
 $ bash docker_run_lia-nonlin.sh -t 3
 ```
 
 See below how to obtain the summary of the experiments and plots once the experiments finish.
 
-The full experiments, with timeout of 300 seconds, can be run with the following commands. However, see the runtime estimates below before executing.
+The full experiments, with timeout of 300 seconds, can be run with the following commands. *However, see the runtime estimates below before executing!*
 ```
 $ bash docker_run_extra_small_lia.sh -t 300
 ```
@@ -204,7 +208,7 @@ With the full timeout of 300 seconds, these are our approximate estimates on the
 
 Given the large runtimes, we recommend to run the experiments in the background, ideally on some remote machine that can run uninterrupted for a couple of days.
 
-**NOTE:** If time is an issue, we suggest to run `LRA-TS` with a timeout of 10 seconds (instead of 300). It should then finish in around half a day and should already give a good approximations of the final results. Depending on the available time, other categories can be run with smaller time limit as well (e.g. 200 seconds). The solvers will inevitably solve smaller amount of benchmarks, but the overall trends should be preserved.
+**NOTE:** If time is an issue, we suggest to run `LRA-TS` with a timeout of 10 seconds (instead of 300). It should then finish in around half a day and should already give a good approximations of the final results. Depending on the available time, other categories can be run with smaller time limit as well (e.g., 200 seconds). The solvers will inevitably solve smaller amount of benchmarks, but the overall trends should be preserved.
 
 ### Memory requirements
 `Golem` itself is quite modest with the memory consumption, a single task should not consume more than 2 gigabytes and is typically much lower.
@@ -259,7 +263,7 @@ Beside this artifact, `Golem` is also available on [GitHub](https://github.com/u
 The GitHub repository contains README with additional information about the tool, including basic description of how to compile it from source. It additionally contains regular binary [releases](https://github.com/usi-verification-and-security/golem/releases).
 After you obtain the binary, `Golem` can run on any SMT-LIB2 file defining a CHC satisfiability problem as mentioned in the introduction. Additional options are explained in the usage, obtained by running `golem --help`.
 
-Additionally, `Golem` participated in CHC-COMP 2021, 2022 and 2023.
+Additionally, `Golem` participated in CHC-COMP 2021, 2022 and 2023, where it placed among the top solvers in its categories.
 Reports on competitions are publicly available, see the reports of [2021](https://arxiv.org/abs/2109.04635) and [2022](https://arxiv.org/abs/2211.12231) (report for 2023 has not been released yet).
 
 
