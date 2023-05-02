@@ -25,8 +25,8 @@ done
 
 
 #recompute the virtual best
-vb_tmp_file="${results_dir}/VB.tmp"
-vb_file="${results_dir}/VB.csv" 	# necessary because recompute_virtual_best collects all .csv files
+vb_tmp_file="${results_dir}/vb.tmp"
+vb_file="${results_dir}/vb.csv" 	# necessary because recompute_virtual_best collects all .csv files
 [ ! -e ${vb_file} ] || rm ${vb_file}    # delete virtual best file if exists
 bash ${script_dir}/recompute_virtual_best.sh ${results_dir} -t ${timelimit} > ${vb_tmp_file}
 mv ${vb_tmp_file} ${vb_file}

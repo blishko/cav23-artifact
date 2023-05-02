@@ -51,7 +51,7 @@ plot for [n=1:words(filenames)] word(filenames, n) using 0:1 with linespoints pt
 EOF
 
 # patch legend names
-sed -e '/^labels/ s/virtual_best/VB/' -e '/^labels/ s/golem_imc/IMC/' -e '/^labels/ s/golem_lawi/LAWI/' -e '/^labels/ s/golem_spacer/Spacer/' -e '/^labels/ s/golem_bmc/BMC/' -e '/^labels/ s/golem_kind/KIND/' -e '/^labels/ s/golem_split-tpa/SPLIT-TPA/' -e '/^labels/ s/golem_tpa/TPA/' ${TMP}/plot.gp >${TMP}/plot_patched.gp
+sed -e '/^labels/ s/vb/VB/' -e '/^labels/ s/golem_imc/IMC/' -e '/^labels/ s/golem_lawi/LAWI/' -e '/^labels/ s/golem_spacer/Spacer/' -e '/^labels/ s/golem_bmc/BMC/' -e '/^labels/ s/golem_kind/KIND/' -e '/^labels/ s/golem_split-tpa/SPLIT-TPA/' -e '/^labels/ s/golem_tpa/TPA/' ${TMP}/plot.gp >${TMP}/plot_patched.gp
 
 mv ${TMP}/plot_patched.gp ${TMP}/plot.gp
 gnuplot ${TMP}/plot.gp
