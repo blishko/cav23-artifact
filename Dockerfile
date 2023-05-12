@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN groupadd -r cav && useradd -r -g cav cav
+RUN groupadd -r cav && useradd -m -r -g cav cav
 
 # set up environment
 
