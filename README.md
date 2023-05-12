@@ -40,6 +40,8 @@ Alternatively, the image can be built locally from the root directory of this re
 $ docker build -f Dockerfile . -t blishko/cav23
 ```
 
+*Note:* If `pull` does not find the image, try using fully qualified name `docker.io/blishko/cav23:latest`. This may be required, for example, when using [ Podman](https://docs.podman.io/en/latest/) emulating `Docker`.
+
 ## Machine specification
 The original experiments were run on a powerful machine with AMD EPYC 7452 32-core processor and 8x32 GiB of memory. 
 
