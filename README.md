@@ -35,12 +35,18 @@ Assuming a running docker engine, it is possible to simply pull the provided Doc
 $ docker image pull blishko/cav23:latest
 ```
 
+*Note:* If `pull` does not find the image, try using fully qualified name `docker.io/blishko/cav23:latest`. This may be required, for example, when using [ Podman](https://docs.podman.io/en/latest/) emulating `Docker`.
+
 Alternatively, the image can be built locally from the root directory of this repository:
 ```
 $ docker build -f Dockerfile . -t blishko/cav23
 ```
 
-*Note:* If `pull` does not find the image, try using fully qualified name `docker.io/blishko/cav23:latest`. This may be required, for example, when using [ Podman](https://docs.podman.io/en/latest/) emulating `Docker`.
+Moreover, we provide the image already built as part of the release in a .tar.gz archive.
+To load the image directly from the archive, run
+```
+$ docker load < docker_image.tar.gz
+```
 
 ## Machine specification
 The original experiments were run on a powerful machine with AMD EPYC 7452 32-core processor and 8x32 GiB of memory. 
