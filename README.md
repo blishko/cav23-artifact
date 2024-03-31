@@ -54,7 +54,7 @@ This repository contains the following:
 * `install_packages.sh`: A script that installs the necessary dependencies in the `docker` image.
 * `host_scripts`: Collections of scripts that are used to present the results obtained from the experiments; these are intended to run on the host.
 * `docker_run_*`: A set of scripts for executing the experiments; these are executed on the host machine. They start a new docker container, run the corresponding experiment and copy the obtained results back to the host.
-* `original_logs`: Results collected from our original experiments. Note that these use *space* as the delimiter while the scripts in this artifact use *comma* as the delimiter. Also note that these are the original logs obtained by using `Golem 0.3.1` (and older version of `Z3` for `extra-small-lia`), as mentioned in the introduction.
+* `original_logs`: Results collected from our original experiments. Note that these use *space* as the delimiter while the scripts in this artifact use *comma* as the delimiter. 
 
 ## Docker image structure
 Beside the benchmarks and helper scripts copied from this repository, the docker image also contains all the tools used in the experiments. We used the binaries released in the corresponding GitHub repositories and these are already prepared in the docker image.
@@ -67,11 +67,11 @@ It contains the following subdirectories:
 
 * `raw_logs`,`times`: initially empty directories for storing results of the experiments
 
-* `eldarica`: [`Eldarica`](https://github.com/uuverifiers/eldarica) solver (v2.0.8)
+* `eldarica`: [`Eldarica`](https://github.com/uuverifiers/eldarica) solver (v2.0.9)
 
-* `golem`: [`Golem`](https://github.com/usi-verification-and-security/golem) (v0.3.2)
+* `golem`: [`Golem`](https://github.com/usi-verification-and-security/golem) (v0.5.0)
 
-* `z3-4.11.2-x64-glibc-2.31`: [`Z3`](https://github.com/Z3Prover/z3) solver (v4.11.2) which contains `Spacer` as one of its engines for solving CHCs.
+* `z3-4.13.0-x64-glibc-2.31`: [`Z3`](https://github.com/Z3Prover/z3) solver (v4.13.0) which contains `Spacer` as one of its engines for solving CHCs.
 
 
 ## Benchmark sets
@@ -92,7 +92,7 @@ The benchmarks are available in `benchmarks` folder, each set in the correspondi
 The artifact repository additionally contains `trivial` benchmarks used for the smoke test and a benchmark for demonstrating the witness computation.
 
 ## Tools
-In these experiments we compare `Golem 0.3.2` against `Eldarica 2.0.8` and `Spacer` engine in `Z3 4.11.2`.
+In these experiments we compare `Golem 0.5.0` against `Eldarica 2.0.9` and `Spacer` engine in `Z3 4.13.0`.
 The artifact uses binaries officially published on GitHub.
 
 
