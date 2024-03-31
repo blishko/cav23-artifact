@@ -15,14 +15,6 @@ Available options can be listed using `--help` option.
 ## Note for artifact evaluation
 We provide helper scripts to facilitate re-running the experiments; however, the experiments may take a large amount of time (in order of days), so we recommend to start running them as soon as possible.
 
-### Errata
-Compared to the experimentation described in the original submission, we noticed the following problem during the preparation of the artifact.
-First, there was a bug in the part of the code dealing with the extension of the split-TPA module to the chain of transition systems. This bug affects *only* `split-TPA` engine of `Golem` on the `extra-small-lia` subcategory (Table 2). For this artifact, we thus use version `0.3.2` instead of `0.3.1`. The change between these releases only fixes this bug; all other experiments are unaffected. In the fixed version, `split-tpa` solved `22` benchmarks, instead of the originally reported `44` benchmarks.
-Additionally, the results reported for `Z3-Spacer` on the `extra-small-lia` category were obtained from older version of Z3 than used in the other experiments. `Z3 4.11.2` solved `18` benchmarks instead of `16` originally reported.
-While `split-TPA` is now worse than `Eldarica`, it is still better than other `Golem`'s engines (and `Z3-Spacer`) on this subcategory.
-We stress that only the results for the `extra-small-lia` subcategory (Table 2) are affected, all other results are unaffected.
-We fill fix the presentation in the camera-ready version of the paper.
-
 ## Set up
 The artifact is distributed as a combination of a `docker` image (where the experiments run) and scripts intended to run in the host machine (for presentation of the computed results).
 To repeat the experiments and obtain the results, only `docker` is required; we assume familiarity with [Docker terminology](https://docs.docker.com/get-started/).
