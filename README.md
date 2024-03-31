@@ -24,7 +24,7 @@ However, to present the summary tables and plots, we prepared separate scripts t
 
 Assuming a running docker engine, it is possible to simply pull the provided Docker image from Docker Hub:
 ```
-$ docker image pull blishko/cav23:latest
+$ docker image pull blishko/cav23:v1.1
 ```
 
 *Note:* If `pull` does not find the image, try using fully qualified name `docker.io/blishko/cav23:latest`. This may be required, for example, when using [ Podman](https://docs.podman.io/en/latest/) emulating `Docker`.
